@@ -39,6 +39,5 @@
     "tailwindcss": "^4.0.15",
     "typescript": "^5.8.2",
     "vitest": "^3.0.9"
-  },
-  "packageManager": "pnpm@10.4.1"
+  }
 }
