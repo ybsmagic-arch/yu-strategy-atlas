@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, Building2, Crown, Sparkles } from "lucide-react";
-import { articles } from "@/data/articles";
+import { getPublishedArticles } from "@/lib/articles-repository";
 import { ArticleCard } from "@/components/article-card";
 
-export default function Home() { const today=articles[0]; return <>
+export default async function Home() { const articles=await getPublishedArticles(); const today=articles[0]; return <>
   <section className="max-w-7xl mx-auto px-5 pt-16 sm:pt-24 pb-16 grid lg:grid-cols-[1.15fr_.85fr] gap-12 items-end">
     <div><p className="eyebrow mb-7">DAILY CASE STUDY · 每日一案</p><h1 className="text-4xl sm:text-6xl xl:text-7xl leading-[1.22] tracking-[.02em]">從案例裡，<br/><span className="text-[#72806b]">看見系統的形狀。</span></h1><p className="sans text-[#6d706b] max-w-xl mt-8 leading-8">以企業、歷史政權與文化 IP 為三面鏡，結合兵法與 YMOS 六層架構，為每一天留下可行動的策略判讀。</p></div>
     <div className="relative border-l border-[#b59962]/60 pl-7 sm:pl-10 pb-2"><p className="eyebrow">今日案例 · {today.publishedAt}</p><h2 className="text-2xl sm:text-3xl leading-relaxed mt-4">{today.title}</h2><Link href={`/articles/${today.slug}`} className="sans mt-6 inline-flex items-center gap-3 text-sm text-[#60705b]">閱讀完整研究 <ArrowRight size={16}/></Link></div>
