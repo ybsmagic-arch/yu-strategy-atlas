@@ -1,0 +1,1 @@
+export function Footer() { return <footer className="mt-24 border-t border-[#34423a]/15"><div className="max-w-7xl mx-auto px-5 py-12 flex flex-col sm:flex-row gap-4 justify-between text-sm text-[#6d706b]"><p>余氏案例智庫｜YU Strategy Atlas</p><p className="sans text-xs">理解案例 · 理解系統 · 理解世界運行</p></div></footer> }

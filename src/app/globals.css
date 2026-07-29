@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+:root { --paper:#f5f1e8; --paper-deep:#ebe4d6; --sage:#72806b; --sage-dark:#34423a; --gold:#b59962; --ink:#292c29; --muted:#6d706b; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin:0; color:var(--ink); background:var(--paper); font-family:"Noto Serif TC","Songti TC","PMingLiU",serif; }
+a { color:inherit; text-decoration:none; }
+.sans { font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif; }
+.paper-noise { background-image:radial-gradient(rgba(52,66,58,.055) .55px,transparent .55px); background-size:6px 6px; }
+.rule { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+.eyebrow { font-family:"Noto Sans TC",sans-serif; letter-spacing:.22em; text-transform:uppercase; font-size:.72rem; color:var(--sage); }
+.card { border:1px solid rgba(52,66,58,.16); background:rgba(255,253,247,.62); transition:.25s ease; }
+.card:hover { transform:translateY(-3px); border-color:rgba(181,153,98,.6); box-shadow:0 14px 40px rgba(52,66,58,.08); }
+::selection { background:#cfd6c7; }
