@@ -12,7 +12,14 @@ export async function signIn(form: FormData) {
   const client = await createClient();
   if (!client) redirect("/admin/login?error=config");
   const { error } = await client.auth.signInWithPassword({ email: required(form, "email"), password: required(form, "password") });
-  if (error) redirect(`/admin/login?error=${encodeURIComponent("帳號或密碼錯誤")}`);
+  if (error) {
+    const message = error.message.toLowerCase();
+    const friendly = message.includes("email not confirmed") ? "電子郵件尚未確認，請先在 Supabase 確認使用者" :
+      message.includes("invalid api key") || message.includes("api key") ? "Supabase Publishable key 設定不正確或不完整" :
+      message.includes("invalid login credentials") ? "登入資料不符；請確認使用者 Email、密碼與確認狀態" :
+      `Supabase 登入失敗：${error.message}`;
+    redirect(`/admin/login?error=${encodeURIComponent(friendly)}`);
+  }
   redirect("/admin");
 }
 
