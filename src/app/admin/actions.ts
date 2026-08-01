@@ -83,3 +83,14 @@ export async function createArticle(form: FormData) {
   revalidatePath("/"); revalidatePath("/articles"); revalidatePath("/admin");
   redirect(`/admin?created=${status}`);
 }
+
+export async function updateStrategyCaseStatus(form:FormData){
+  const client=await createClient();if(!client)redirect("/admin/login");
+  const {data:auth}=await client.auth.getUser();if(!auth.user)redirect("/admin/login");
+  const id=required(form,"id"),slug=required(form,"slug"),requested=required(form,"status");
+  const status=requested==="published"?"published":requested==="verified"?"verified":"pending_review";
+  const {error}=await client.from("strategy_cases").update({status}).eq("id",id);
+  if(error)redirect(`/admin/strategy-cases/${slug}?error=${encodeURIComponent(error.message)}`);
+  revalidatePath("/");revalidatePath("/articles");revalidatePath(`/articles/${slug}`);revalidatePath("/admin");
+  redirect(`/admin/strategy-cases/${slug}?updated=${status}`);
+}

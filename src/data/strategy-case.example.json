@@ -1,0 +1,61 @@
+{
+  "slug": "costco-qin-governance-one-piece",
+  "caseDate": "2026-08-01",
+  "title": "低價、制度與長期敘事：如何把信任做成可複製系統",
+  "subtitle": "從 Costco、秦孝公與《ONE PIECE》觀察組織如何穿越成長",
+  "summary": "本案例以 Costco 的會員制飛輪、秦孝公推動商鞅變法的制度重建，以及《ONE PIECE》的長期敘事為三個分析鏡頭，探討信任如何從個人承諾轉化為可持續的制度、符號與社群機制。",
+  "centralTheme": "真正的長期優勢，不是一次性的紅利，而是讓承諾能被制度、流程與敘事持續兌現。",
+  "tags": ["信任", "制度", "商業飛輪", "長期敘事", "YMOS"],
+  "status": "pending_review",
+  "manuallyEdited": false,
+  "company": {
+    "name": "好市多", "englishName": "Costco", "industry": "會員制零售",
+    "foundingBackground": "由倉儲型零售與會員制度發展而成，以有限品項與規模採購降低成本。",
+    "timeline": ["1976 年 Price Club 創立", "1983 年 Costco 創立", "1993 年兩家公司合併"],
+    "firstWaveDividend": "大型賣場與郊區消費成長", "foundingCore": "用低毛利與高周轉維持會員信任",
+    "businessFlywheel": "會員費支持低毛利，低價提升續約率，規模再強化採購能力。",
+    "revenueSources": ["商品銷售", "會員費"], "vulnerableRevenue": "會員續約率下滑將削弱整體飛輪",
+    "organizationalMaturity": "高度流程化", "singlePointOfFailure": "低價承諾與選品信任",
+    "crisisPath": "品質或價格失信導致會員續約下降，再反向削弱採購規模。", "organizationType": "會員信任型規模組織"
+  },
+  "leader": {
+    "name": "秦孝公", "regime": "秦國", "era": "戰國時代",
+    "historicalBackground": "秦國面臨國力落後與制度鬆散，需要建立新的治理能力。",
+    "coreDilemma": "改革會衝擊既得利益，但不改革則難以生存。", "breakthroughMethod": "任用商鞅並以明確法令推動變法。",
+    "institutionalDesign": "以軍功、戶籍、土地與法令重建國家運作。", "talentStrategy": "跨地域任用能解決核心問題的人才。",
+    "strategicTradeoff": "以短期政治阻力交換長期國家能力。", "historicalCost": "高壓治理與改革者個人風險。",
+    "references": ["《史記・商君列傳》", "《資治通鑑》相關記載"]
+  },
+  "ip": {
+    "name": "航海王", "englishName": "ONE PIECE", "type": "漫畫與跨媒體 IP", "origin": "1997 年於《週刊少年 Jump》連載",
+    "coreNarrative": "夥伴共同追尋自由與夢想。", "characterDesign": "角色具有清楚欲望、創傷與成長弧線。",
+    "emotionalHook": "承諾、犧牲、自由與夥伴情誼。", "worldBuilding": "以島嶼、政權與歷史謎團形成可持續擴張的世界。",
+    "symbolSystem": "草帽、海賊旗與傳承意志。", "communityMechanism": "伏筆討論、角色認同與跨世代追更。",
+    "platformDividend": "長期連載、動畫與全球串流。", "monetization": "出版、動畫、電影、授權與商品。",
+    "longevityMechanism": "主線謎團與分段冒險同時推進。", "backlashRisk": "篇幅過長與結局預期可能造成反噬。"
+  },
+  "strategy": {
+    "quotation": "上下同欲者勝", "source": "《孫子兵法・謀攻篇》",
+    "interpretation": "共同目標只有在承諾、制度與利益一致時，才會轉化為持續行動。",
+    "sharedLogic": "Costco 用會員制、秦孝公用制度改革、ONE PIECE 用共同夢想，把分散參與者綁定在長期承諾上。"
+  },
+  "ymos": {
+    "observationEntry": "先辨認表面低價、改革與冒險背後的共同信任結構。",
+    "coreMethod": "把個體、組織、制度與環境視為彼此回饋的生命系統。",
+    "educationProduct": "將案例轉化為可觀察、可比較、可練習的判讀題。",
+    "lifestyleProduct": "把長期承諾落在每日可持續的小選擇與節奏。",
+    "operatingSystem": "以觀察、辨證、設計、行動、回饋形成策略閉環。",
+    "brandSpirit": "理解生命、理解系統、理解世界運行，才能讓承諾穿越時間。"
+  },
+  "actions": {
+    "strategicConclusion": "以可驗證的承諾建立信任，再用制度與敘事放大。",
+    "actionItems": ["定義一項絕不犧牲的核心承諾", "設計能反覆兌現承諾的流程與指標", "建立讓成員願意長期參與的共同敘事"],
+    "riskWarnings": ["承諾與實際體驗不一致會加速信任崩解", "制度過度僵化可能壓縮創新", "敘事若只剩口號會引發反感"],
+    "teacherInsight": "真正可靠的策略，不靠創辦人每天親自維持，而是讓正確行為成為系統最自然的選擇。"
+  },
+  "sources": [
+    {"title":"Costco Annual Reports","url":"https://investor.costco.com/financials/annual-reports-and-proxy-statements/default.aspx","sourceType":"企業官方資料","note":"會員與營運資訊"},
+    {"title":"《史記・商君列傳》","url":"https://ctext.org/shiji/shang-jun-lie-zhuan/zh","sourceType":"歷史文獻","note":"秦孝公與商鞅變法"},
+    {"title":"ONE PIECE 官方網站","url":"https://one-piece.com/","sourceType":"IP 官方資料","note":"作品與角色資訊"}
+  ]
+}

@@ -59,7 +59,28 @@ supabase db seed
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 SUPABASE_SERVICE_ROLE_KEY=...
+IMPORT_SECRET=使用密碼管理器產生的獨立長密鑰
 ```
+
+## 完整每日案例匯入
+
+新格式以 `strategy_cases.content` 作為唯一完整正文，`case_entities` 與 `case_sources` 僅建立索引，不複製文章。既有 `articles` 與本地 TypeScript 範例仍由相容 repository 讀取。
+
+1. 在 Supabase SQL Editor 套用 `supabase/migrations/202608010001_strategy_cases.sql`。
+2. 在 Vercel 加入 `IMPORT_SECRET`（Production 與 Preview，Sensitive）。
+3. 登入後開啟 `/admin/import-case`，貼上 `src/data/strategy-case.example.json`。
+4. 通過即時驗證後輸入 `IMPORT_SECRET` 並確認匯入；資料預設為 `pending_review`，不會直接公開。
+
+API 範例：
+
+```bash
+curl -X POST https://YOUR_DOMAIN/api/import/strategy-case \
+  -H "Authorization: Bearer YOUR_IMPORT_SECRET" \
+  -H "Content-Type: application/json" \
+  --data @src/data/strategy-case.example.json
+```
+
+若回傳 `409` 與 `warnings`，管理者確認後可使用 `{ "data": <StrategyCase>, "force": true }` 再送出。API 不會更新或覆蓋既有案例。
 
 `SUPABASE_SERVICE_ROLE_KEY` 只能在伺服器使用，禁止加上 `NEXT_PUBLIC_` 或提交 Git。
 
