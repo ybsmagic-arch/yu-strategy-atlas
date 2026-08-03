@@ -1,0 +1,1 @@
+import {BodyNav} from "@/components/body-nav";export default function BodyLayout({children}:{children:React.ReactNode}){return <><div className="mx-auto max-w-7xl px-5"><div className="pt-8"><p className="eyebrow">HUMAN BODY ATLAS</p><BodyNav/></div></div>{children}</>}

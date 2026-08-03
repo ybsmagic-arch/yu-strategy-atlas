@@ -1,0 +1,1 @@
+import {ReferenceLinksPage} from "@/components/reference-links-page";export default function KnowledgeLinks(){return <ReferenceLinksPage collection="knowledge" title="知識好站" description="六大研究知識庫共用的精選網站與 AI 參考來源。"/>}

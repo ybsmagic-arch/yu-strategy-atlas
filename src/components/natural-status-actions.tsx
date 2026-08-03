@@ -1,0 +1,3 @@
+import {updateNaturalStatus} from "@/app/nature-actions";
+const states=[{value:"draft",label:"草稿"},{value:"pending_review",label:"待審核"},{value:"published",label:"發布",primary:true},{value:"rejected",label:"退回"}];
+export function NaturalStatusActions({id}:{id:string}){return <div className="flex flex-wrap gap-2">{states.map(state=><form action={updateNaturalStatus} key={state.value}><input type="hidden" name="id" value={id}/><input type="hidden" name="status" value={state.value}/><button className={state.primary?"bg-[#34423a] px-2 py-1 text-white":"border px-2 py-1"}>{state.label}</button></form>)}</div>}

@@ -1,0 +1,3 @@
+-- Optional test data. Run only after signing in; replace the UUID with the admin user's auth.users.id.
+-- The migration defaults created_by to auth.uid(), so the recommended method is importing
+-- src/data/thoughts.example.json from the authenticated UI.

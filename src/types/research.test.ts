@@ -1,0 +1,2 @@
+import {describe,expect,it} from "vitest";import example from "../../examples/research-article.example.json";import {researchArticleSchema} from "./research";
+describe("unified research article",()=>{it("accepts the portable example",()=>{const item=researchArticleSchema.parse(example);expect(item.library).toBe("humanities");expect(item.ymosTakeaway.takeawaySentence).toBeTruthy()});it("requires a YMOS takeaway",()=>{expect(researchArticleSchema.safeParse({...example,ymosTakeaway:undefined}).success).toBe(false)})});

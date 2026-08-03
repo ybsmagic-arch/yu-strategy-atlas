@@ -1,0 +1,1 @@
+import {ReferenceLinksPage} from "@/components/reference-links-page";export default function TcmLinks(){return <ReferenceLinksPage collection="tcm" title="中醫藥好站" description="為中醫藥 AI 知識基礎系統整理的專門來源，涵蓋中藥、方劑、經穴、耳穴、董氏奇穴、名醫與經典。"/>}

@@ -1,0 +1,2 @@
+import {describe,expect,it} from "vitest";import example from "../../examples/natural-wisdom.example.json";import {naturalWisdomSchema} from "./naturalWisdom";
+describe("Natural wisdom schema",()=>{it("accepts the import example",()=>expect(naturalWisdomSchema.parse(example).nameZh).toBe("蜜蜂"));it("rejects invalid levels",()=>expect(naturalWisdomSchema.safeParse({...example,ymosLevel:"organization"}).success).toBe(false));it("requires a positive per-type number",()=>expect(naturalWisdomSchema.safeParse({...example,entryNumber:0}).success).toBe(false))});

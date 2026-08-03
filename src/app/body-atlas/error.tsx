@@ -1,0 +1,1 @@
+"use client";export default function ErrorPage({reset}:{reset:()=>void}){return <div className="mx-auto max-w-4xl px-5 py-20"><div className="card p-8"><h1 className="text-2xl">生命系統資料暫時無法讀取</h1><p className="sans mt-3 text-sm text-[#6d706b]">請確認 Supabase migration 與連線設定後再試一次。</p><button className="sans mt-5 border px-4 py-2" onClick={reset}>重新載入</button></div></div>}

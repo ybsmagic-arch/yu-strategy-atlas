@@ -1,14 +1,9 @@
 import Link from "next/link";
-import { Menu, Search } from "lucide-react";
+import Image from "next/image";
+import {createClient} from "@/lib/supabase/server";
+import {WorkbenchNav} from "@/components/workbench-nav";
 
-const nav = [["/articles","每日研究"],["/companies","企業"],["/leaders","政權人物"],["/ips","IP"],["/stratagems","兵法"],["/ymos","YMOS 六層"]];
-
-export function Header() {
-  return <header className="border-b border-[#34423a]/15 bg-[#f5f1e8]/90 backdrop-blur-md sticky top-0 z-50">
-    <div className="mx-auto max-w-7xl px-5 h-20 flex items-center justify-between">
-      <Link href="/" className="flex items-center gap-3"><span className="grid place-items-center w-10 h-10 rounded-full border border-[#b59962] text-[#34423a] text-lg">余</span><span><b className="block tracking-[.12em] text-sm">余氏案例智庫</b><small className="sans text-[10px] tracking-[.18em] text-[#6d706b]">YU STRATEGY ATLAS</small></span></Link>
-      <nav className="hidden lg:flex items-center gap-7 sans text-sm text-[#505751]">{nav.map(([href,label])=><Link key={href} href={href} className="hover:text-[#9b7d46]">{label}</Link>)}</nav>
-      <div className="flex items-center gap-4"><button aria-label="搜尋"><Search size={19}/></button><button aria-label="開啟選單" className="lg:hidden"><Menu size={22}/></button><Link href="/admin" className="hidden sm:block sans text-xs px-4 py-2 border border-[#34423a]/30">管理入口</Link></div>
-    </div>
-  </header>;
+export async function Header(){
+ const db=await createClient();const {data}=db?await db.auth.getUser():{data:{user:null}};
+ return <header className="sticky top-0 z-50 bg-[#f5f1e8]/95 backdrop-blur"><div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5"><Link href="/" className="flex items-center gap-3"><Image src="/yu-tcm-logo.png" alt="余氏中醫 YU TCM" width={56} height={56} priority className="h-14 w-14 object-contain"/><span><b className="block text-sm tracking-[.12em]">YMOS Knowledge Platform</b><small className="sans text-[10px] tracking-[.15em] text-[#6d706b]">YU STRATEGY ATLAS · 余氏中醫</small></span></Link><div className="sans flex items-center gap-4 text-xs"><Link href="/research">知識作業系統</Link><Link href="/tcm">中醫藥系統</Link><Link href="/links" className="hidden sm:inline">好站連結</Link><Link href="/ymos-takeaways" className="hidden lg:inline">YMOS 取經</Link><Link href={data.user?"/admin":"/admin/login"}>{data.user?"管理中心":"管理者登入"}</Link></div></div>{data.user&&<WorkbenchNav/>}</header>
 }

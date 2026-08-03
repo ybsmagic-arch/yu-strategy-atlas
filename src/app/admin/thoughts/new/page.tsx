@@ -1,0 +1,2 @@
+import { requireAdmin } from "@/lib/auth";import { ThoughtForm } from "@/components/thought-form";
+export default async function NewThought({searchParams}:{searchParams:Promise<{error?:string}>}){const {db}=await requireAdmin();const {data}=await db.from("strategy_cases").select("id,title").order("case_date",{ascending:false});const {error}=await searchParams;return <div className="mx-auto max-w-4xl px-5 py-12"><p className="eyebrow">YMOS THOUGHT</p><h1 className="mt-2 text-4xl">新增每日思想</h1><ThoughtForm cases={data??[]} error={error}/></div>}

@@ -1,0 +1,2 @@
+import Link from "next/link";const items=[["/body-atlas","首頁"],["/body-atlas/articles","器官文章"],["/body-atlas/organs","器官分類"],["/body-atlas/systems","人體系統"],["/body-atlas/axes","生理軸 Axis"],["/body-atlas/tcm","中西醫對照"]];
+export function BodyNav(){return <nav className="sans flex gap-5 overflow-x-auto border-b border-[#34423a]/15 py-4 text-sm whitespace-nowrap">{items.map(([href,label])=><Link key={href} href={href}>{label}</Link>)}</nav>}

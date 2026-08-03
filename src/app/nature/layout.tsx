@@ -1,0 +1,1 @@
+import {NatureNav} from "@/components/nature-nav";export default function Layout({children}:{children:React.ReactNode}){return <><div className="mx-auto max-w-7xl px-5 pt-8"><p className="eyebrow">NATURAL INTELLIGENCE</p><NatureNav/></div>{children}</>}

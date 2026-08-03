@@ -1,0 +1,3 @@
+"use server";
+import {revalidatePath} from "next/cache";import {redirect} from "next/navigation";import {requireAdmin} from "@/lib/auth";import {parseBodyJson,toBodyRow} from "@/lib/bodyAtlas";
+export async function updateBodyArticleJson(form:FormData){const {db}=await requireAdmin();const id=String(form.get("id")??"");try{const item=parseBodyJson(String(form.get("json")??""));const {error}=await db.from("body_articles").update({...toBodyRow({...item,manuallyEdited:true}),manually_edited:true}).eq("id",id);if(error)throw error;revalidatePath("/body-atlas");revalidatePath("/body-atlas/articles");redirect("/admin/body-atlas?edited=1")}catch(error){redirect(`/admin/body-atlas/${id}/edit?error=${encodeURIComponent(error instanceof Error?error.message:"編輯失敗")}`)}}

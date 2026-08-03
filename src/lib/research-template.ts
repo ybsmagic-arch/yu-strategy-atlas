@@ -1,0 +1,12 @@
+import {libraryMeta,type ResearchLibrary} from "@/types/research";
+
+const outlines:Record<string,string[]>={
+ company:["企業背景","商業模式","核心能力","組織與人才","競爭優勢","風險與限制"],leader:["人物背景","核心困境","關鍵決策","制度與用人","成果與代價"],
+ "case-analysis":["案例背景","問題與利害關係人","決策與執行","結果","成功或失敗原因","可複製與不可複製之處"],"current-affairs":["資料截至日期","事件背景","利害關係人","當前局勢","可能情境","觀察指標"],
+ organ:["器官定位","解剖與生理","神經與循環","疾病與風險","中西醫對照","證據限制"],"body-system":["系統組成","生理功能","調控機制","失衡表現","研究限制"],axis:["Axis 定義","上游訊號","下游反應","臨床關聯","證據限制"],"medical-topic":["問題定義","生理機制","現代研究","臨床意義","風險與限制"],
+ animal:["生物分類","演化背景","生存策略","行為與合作","風險管理","生態互動"],plant:["植物分類","生長結構","繁殖擴散","環境適應","共生與防禦","用途與限制"],mineral:["礦物分類","化學成分","形成方式","物理性質","工業文化用途","療法主張與證據"],environment:["環境定義","形成機制","生態作用","變化與風險","人類互動"],
+ tcm:["起源與理論","操作方式","適用主張","禁忌與風險","現代研究","證據等級"],western:["療法定義","作用機制","適應症","操作流程","副作用與禁忌","證據等級"],ayurveda:["起源與理論","體質與診斷","操作方法","風險與禁忌","現代研究"],traditional:["起源文化","理論基礎","操作方式","適用主張","安全與證據"],"mind-body":["理論基礎","實施方式","可能機制","適用情境","風險與證據"],
+ "clinical-case":["匿名個案背景","主訴與病史","檢查與診斷","治療時間軸","結果與追蹤","限制"],"tcm-case":["匿名個案背景","四診與辨證","治法與方藥","治療時間軸","結果與追蹤","限制"],"integrative-case":["匿名個案背景","中西醫評估","整合治療計畫","治療時間軸","結果與追蹤","限制"],
+ quotation:["名言原文與翻譯","人物與時代背景","原始出處","完整上下文","真實性查核","核心思想與常見誤解"],book:["作者與時代背景","內容摘要","章節導讀","核心觀點","重要概念","爭議與限制","適合讀者"],film:["基本資料與無雷簡介","完整劇情（含劇透）","角色分析","核心衝突","象徵與隱喻","人性與管理分析","爭議與限制"],
+};
+export function makeResearchTemplate(library:ResearchLibrary,articleType:string){const typeLabel=libraryMeta[library].types.find(x=>x.value===articleType)?.label??articleType;const body=[`# 【${typeLabel}文章標題】`,...(outlines[articleType]??["研究背景","核心內容","分析","限制"]).flatMap(x=>["",`## ${x}`,"","【請填寫】"])].join("\n");return {entryNumber:1,library,articleType,slug:"replace-with-english-slug",researchDate:new Date().toISOString().slice(0,10),title:`【${typeLabel}文章標題】`,subtitle:null,summary:"【請填寫研究摘要】",bodyMarkdown:body,keywords:[],entities:[],sources:[],evidenceLimits:"【請說明事實、推論、資料與證據限制】",content:{},status:"pending_review",manuallyEdited:false,publishedAt:null,ymosTakeaway:{coreFact:"【本篇最重要且可驗證的事實】",coreQuestion:"【本篇要回答的核心問題】",takeawaySentence:"【給 YMOS 的一句取經】",individualLayer:null,teamLayer:null,systemLayer:null,ecosystemLayer:null,primaryElement:null,secondaryElement:null,lifeSystemMapping:null,managementInsight:null,educationInsight:null,brandInsight:null,aiInsight:null,healthInsight:null,applicableScenarios:[],misuseWarnings:[],relatedKnowledge:[]}}}
