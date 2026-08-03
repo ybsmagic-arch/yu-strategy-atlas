@@ -29,6 +29,32 @@ export async function signOut() {
   redirect("/");
 }
 
+export async function changePassword(form: FormData) {
+  const client = await createClient();
+  if (!client) redirect("/admin/login?error=config");
+
+  const { data: auth } = await client.auth.getUser();
+  if (!auth.user) redirect("/admin/login");
+
+  const password = required(form, "password");
+  const confirmation = required(form, "password_confirmation");
+
+  if (password.length < 10) {
+    redirect(`/admin/account?error=${encodeURIComponent("新密碼至少需要 10 個字元")}`);
+  }
+  if (password !== confirmation) {
+    redirect(`/admin/account?error=${encodeURIComponent("兩次輸入的新密碼不一致")}`);
+  }
+
+  const { error } = await client.auth.updateUser({ password });
+  if (error) {
+    redirect(`/admin/account?error=${encodeURIComponent(`修改失敗：${error.message}`)}`);
+  }
+
+  await client.auth.signOut();
+  redirect("/admin/login?password=changed");
+}
+
 export async function createArticle(form: FormData) {
   const client = await createClient();
   if (!client) redirect("/admin/articles/new?error=config");
