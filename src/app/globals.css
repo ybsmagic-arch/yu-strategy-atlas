@@ -16,3 +16,7 @@ a { color:inherit; text-decoration:none; }
 .badge { display:inline-flex; align-items:center; border-radius:999px; background:#e1ddd2; padding:.2rem .65rem; font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif; font-size:.72rem; }
 .work-table { width:100%; border-collapse:collapse; font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif; font-size:.84rem; }
 .work-table th,.work-table td { border-bottom:1px solid rgba(52,66,58,.13); padding:.8rem; text-align:left; vertical-align:top; }
+.quiet-menu[open] > summary { color:var(--gold); }
+.quiet-menu > summary::-webkit-details-marker { display:none; }
+.quiet-row:hover { background:rgba(255,253,247,.42); }
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
