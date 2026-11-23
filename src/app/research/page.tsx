@@ -2,13 +2,16 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { libraryMeta, researchLibraries, type ResearchLibrary } from "@/types/research";
+import { measureTiming } from "@/lib/timing-diagnostics";
 
 type CountResult = { counts: Map<string, number> | null };
 
 async function loadPublishedCounts(): Promise<CountResult> {
   const db = await createClient();
   if (!db) return { counts: null };
-  const { data, error } = await db.from("research_articles").select("library").eq("status", "published");
+  const { data, error } = await measureTiming("research_counts_query", async () =>
+    await db.from("research_articles").select("library").eq("status", "published")
+  );
   if (error) return { counts: null };
   const counts = new Map<string, number>();
   for (const row of data ?? []) counts.set(row.library, (counts.get(row.library) ?? 0) + 1);

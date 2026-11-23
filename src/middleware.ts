@@ -1,6 +1,7 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { withAuthDeadline } from "@/lib/supabase/auth-deadline";
+import { recordTiming, roundDuration, timingDiagnosticsEnabled } from "@/lib/timing-diagnostics";
 
 type CookieToSet = { name: string; value: string; options?: CookieOptions };
 
@@ -33,6 +34,7 @@ export async function middleware(request: NextRequest) {
   }
 
   let user = null;
+  const authStartedAt = performance.now();
   try {
     user = await withAuthDeadline(async (fetcher, signal) => {
       const supabase = createServerClient(url, key, {
@@ -56,6 +58,7 @@ export async function middleware(request: NextRequest) {
     // Network failures, deadlines and unexpected errors must fail closed.
     user = null;
   }
+  const authDuration = performance.now() - authStartedAt;
 
   if (!user) {
     const loginUrl = request.nextUrl.clone();
@@ -64,6 +67,11 @@ export async function middleware(request: NextRequest) {
     const redirect = NextResponse.redirect(loginUrl);
     response.cookies.getAll().forEach(cookie => redirect.cookies.set(cookie));
     return redirect;
+  }
+
+  if (timingDiagnosticsEnabled()) {
+    recordTiming("middleware_auth", authDuration);
+    response.headers.append("Server-Timing", `ymos_mw_auth;dur=${roundDuration(authDuration)}`);
   }
 
   return response;

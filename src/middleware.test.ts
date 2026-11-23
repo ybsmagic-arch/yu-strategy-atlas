@@ -34,6 +34,13 @@ it("preserves authenticated access", async () => {
   getUser.mockResolvedValue({ data: { user: { id: "user" } }, error: null });
   expect((await middleware(request("/admin"))).status).toBe(200);
 });
+it("exposes auth timing only to authenticated users on the flagged preview", async () => {
+  vi.stubEnv("VERCEL_ENV", "preview");
+  vi.stubEnv("YMOS_TIMING_DIAGNOSTICS", "1");
+  expect((await middleware(request("/admin"))).headers.get("server-timing")).toBeNull();
+  getUser.mockResolvedValue({ data: { user: { id: "user" } }, error: null });
+  expect((await middleware(request("/admin"))).headers.get("server-timing")).toMatch(/^ymos_mw_auth;dur=\d/);
+});
 it.each([new Error("fetch failed"), new Error("unknown")])("fails closed on rejection", async error => {
   getUser.mockRejectedValue(error);
   expect((await middleware(request("/admin"))).status).toBe(307);
