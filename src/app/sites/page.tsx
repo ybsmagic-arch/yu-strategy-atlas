@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
-import { parseSiteMetadata, SITE_SOURCE_TYPE, siteLifecycleLabels, siteLifecycles } from "@/lib/site-registry";
+import { approvedKnowledgeRelations, parseSiteMetadata, SITE_SOURCE_TYPE, siteLifecycleLabels, siteLifecycles } from "@/lib/site-registry";
 import { measureTiming } from "@/lib/timing-diagnostics";
 
 type SiteSearchParams = { category?: string; tag?: string; lifecycle?: string; view?: string };
@@ -42,7 +42,8 @@ async function RegistryResults({ params }: { params: SiteSearchParams }) {
     <p className="sans mt-6 text-sm text-[#6d706b]">顯示 {rows.length} 個網站節點</p>
     <div className="mt-6 grid gap-5 md:grid-cols-2">{rows.map((item) => {
       const meta = parseSiteMetadata(item.notes);
-      return <article className="card p-6" key={item.id}><div className="flex flex-wrap gap-2"><span className="badge">{item.category}</span>{meta && <span className="badge">{siteLifecycleLabels[meta.lifecycle]}</span>}</div><h2 className="mt-4 text-2xl"><a href={item.url} target="_blank" rel="noreferrer">{item.title} ↗</a></h2><p className="sans mt-4 text-sm leading-7">{item.description}</p><div className="mt-4 flex flex-wrap gap-2">{item.tags?.map((tag) => <span className="badge" key={tag}>#{tag}</span>)}</div>{meta?.relations.length ? <p className="sans mt-5 text-sm"><b>關聯網站：</b>{meta.relations.join("、")}</p> : null}<p className="sans mt-4 break-all text-xs text-[#6d706b]">{item.url}</p></article>;
+      const approvedKnowledge = approvedKnowledgeRelations(meta);
+      return <article className="card p-6" key={item.id}><div className="flex flex-wrap gap-2"><span className="badge">{item.category}</span>{meta && <span className="badge">{siteLifecycleLabels[meta.lifecycle]}</span>}</div><h2 className="mt-4 text-2xl"><a href={item.url} target="_blank" rel="noreferrer">{item.title} ↗</a></h2><p className="sans mt-4 text-sm leading-7">{item.description}</p><div className="mt-4 flex flex-wrap gap-2">{item.tags?.map((tag) => <span className="badge" key={tag}>#{tag}</span>)}</div>{meta?.relations.length ? <p className="sans mt-5 text-sm"><b>關聯網站：</b>{meta.relations.join("、")}</p> : null}{approvedKnowledge.length ? <div className="sans mt-5 border-t pt-4 text-sm"><b>知識入口</b><ul className="mt-2 space-y-2">{approvedKnowledge.map((relation) => <li key={`${relation.sourceType}:${relation.knowledgeId}:${relation.route}`}><Link prefetch={false} className="underline" href={relation.route}>{relation.displayName} →</Link></li>)}</ul></div> : null}<p className="sans mt-4 break-all text-xs text-[#6d706b]">{item.url}</p></article>;
     })}</div>
     {!rows.length && <div className="card mt-8 p-12 text-center"><h2 className="text-2xl">沒有符合條件的網站節點</h2><p className="sans mt-3 text-sm">既有知識好站與中醫好站仍保留在原清單。</p></div>}
   </>;
