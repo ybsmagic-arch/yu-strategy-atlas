@@ -18,8 +18,9 @@ function isPublicPath(pathname: string) {
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const headers = new Headers(request.headers);
-  // Display hint only; never used to authorize access. Overwrite client input.
+  // Display hints only; never used to authorize access. Overwrite client input.
   headers.set("x-atlas-login-page", String(pathname === "/admin/login" || pathname.startsWith("/admin/login/")));
+  headers.set("x-atlas-authenticated", "false");
   const next = () => NextResponse.next({ request: { headers } });
   let response = next();
   if (isPublicPath(pathname)) return response;
@@ -68,6 +69,14 @@ export async function middleware(request: NextRequest) {
     response.cookies.getAll().forEach(cookie => redirect.cookies.set(cookie));
     return redirect;
   }
+
+  // getUser() above is still the fail-closed access gate. This hint only lets
+  // the shared Header avoid repeating that remote call to decide whether to
+  // show navigation; page authorization and RLS never consume this header.
+  headers.set("x-atlas-authenticated", "true");
+  const authenticatedResponse = next();
+  response.cookies.getAll().forEach(cookie => authenticatedResponse.cookies.set(cookie));
+  response = authenticatedResponse;
 
   if (timingDiagnosticsEnabled()) {
     recordTiming("middleware_auth", authDuration);

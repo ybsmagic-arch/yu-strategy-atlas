@@ -32,7 +32,9 @@ it("fails closed and ends at the login page without a loop", async () => {
 });
 it("preserves authenticated access", async () => {
   getUser.mockResolvedValue({ data: { user: { id: "user" } }, error: null });
-  expect((await middleware(request("/admin"))).status).toBe(200);
+  const response = await middleware(request("/admin"));
+  expect(response.status).toBe(200);
+  expect(response.headers.get("x-middleware-request-x-atlas-authenticated")).toBe("true");
 });
 it("exposes auth timing only to authenticated users on the flagged preview", async () => {
   vi.stubEnv("VERCEL_ENV", "preview");
@@ -68,8 +70,9 @@ it("cancels hanging fetch and bounds SDK retries/unfinished work to the total de
   expect(vi.getTimerCount()).toBe(0);
 });
 it("overwrites a spoofed display hint without bypassing protected auth", async () => {
-  const req = new NextRequest("https://atlas.test/admin", { headers: { "x-atlas-login-page": "true" } });
-  expect((await middleware(req)).status).toBe(307);
+  const req = new NextRequest("https://atlas.test/admin", { headers: { "x-atlas-login-page": "true", "x-atlas-authenticated": "true" } });
+  const response = await middleware(req);
+  expect(response.status).toBe(307);
   expect(getUser).toHaveBeenCalledOnce();
 });
 it.each(["/_next/static/chunks/app.js", "/_next/image?url=test", "/favicon.ico", "/yu-tcm-logo.png"])("keeps existing static exclusion: %s", path => {
