@@ -55,15 +55,22 @@ describe("site registry metadata", () => {
   it("validates the Owner-reviewed first batch as fixture only", () => {
     const article = (knowledgeId: string, slug: string, displayName: string, approvalStatus: "approved" | "pending" | "deferred") => ({ sourceType: "strategy_article" as const, knowledgeId, route: `/articles/${slug}`, relationType: "brand_case_reference" as const, displayName, approvalStatus });
     const fixture = [
-      article("a005", "ikea-standardization-and-imagination", "IKEA：標準化如何釋放想像", "approved"),
-      article("a006", "spotify-discovery-and-attention", "Spotify：平台如何分配注意力", "approved"),
-      article("a004", "patagonia-purpose-and-boundaries", "Patagonia：使命如何約束成長", "deferred"),
-      article("a003", "toyota-system-and-resilience", "豐田：慢系統如何累積韌性", "pending"),
-      article("a007", "muji-subtraction-and-clarity", "無印良品：減法如何留下核心", "pending"),
-      article("a003", "toyota-system-and-resilience", "豐田：慢系統如何累積韌性", "deferred"),
-      article("a007", "muji-subtraction-and-clarity", "無印良品：減法如何留下核心", "deferred"),
+      { siteTitle: "耳林高手", relations: [
+        article("a005", "ikea-standardization-and-imagination", "IKEA：標準化如何釋放想像", "approved"),
+        article("a006", "spotify-discovery-and-attention", "Spotify：平台如何分配注意力", "approved"),
+        article("a004", "patagonia-purpose-and-boundaries", "Patagonia：使命如何約束成長", "deferred"),
+      ] },
+      { siteTitle: "小方 LET GO", relations: [
+        article("a003", "toyota-system-and-resilience", "豐田：慢系統如何累積韌性", "pending"),
+        article("a007", "muji-subtraction-and-clarity", "無印良品：減法如何留下核心", "pending"),
+      ] },
+      { siteTitle: "醫生醫世", relations: [
+        article("a003", "toyota-system-and-resilience", "豐田：慢系統如何累積韌性", "deferred"),
+        article("a007", "muji-subtraction-and-clarity", "無印良品：減法如何留下核心", "deferred"),
+      ] },
     ];
-    expect(fixture.every((relation) => knowledgeRelationSchema.safeParse(relation).success)).toBe(true);
-    expect(fixture.filter((relation) => relation.approvalStatus === "approved")).toHaveLength(2);
+    const base = { url: "https://example.com", description: "fixture", category: "知識網站", tags: "", lifecycle: "candidate", relations: "", note: "" };
+    expect(fixture.every((site) => siteFormSchema.safeParse({ ...base, title: site.siteTitle, knowledgeRelations: JSON.stringify(site.relations) }).success)).toBe(true);
+    expect(fixture.flatMap((site) => site.relations).filter((relation) => relation.approvalStatus === "approved")).toHaveLength(2);
   });
 });
